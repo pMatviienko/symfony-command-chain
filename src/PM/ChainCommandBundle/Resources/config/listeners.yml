@@ -1,0 +1,16 @@
+services:
+    pm.chaincommandbundle.event.subscriber:
+        class: PM\ChainCommandBundle\EventSubscriber\ConsoleCommandSubscriber
+        arguments:
+            - '@pm.chaincommandbundle.chain.manager'
+            - '@pm.chaincommandbundle.chain.logger'
+            - '@event_dispatcher'
+        tags:
+            - { name: kernel.event_subscriber }
+    pm.chaincommandbundle.chain_logger.subscriber:
+        class: PM\ChainCommandBundle\EventSubscriber\ChainLoggingSubscriber
+        arguments:
+            - '@pm.chaincommandbundle.chain.manager'
+            - '@pm.chaincommandbundle.chain.logger'
+        tags:
+            - { name: kernel.event_subscriber }

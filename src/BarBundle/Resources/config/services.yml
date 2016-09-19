@@ -1,0 +1,6 @@
+services:
+    barbundle.command.hi:
+        class: BarBundle\Command\HiCommand
+        tags:
+            - {name: 'pm.chain_command_to', command: 'foo:hello'}
+            - {name: 'console.command'}

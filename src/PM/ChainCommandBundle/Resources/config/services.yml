@@ -1,0 +1,30 @@
+parameters:
+    pm.chaincommandbundle.chain.log.file: "pm.chaincommandbundle.chain.log"
+    pm.chaincommandbundle.chain.manager.class: "PM\\ChainCommandBundle\\Service\\CommandChainManagerService"
+    pm.chaincommandbundle.chain.collection.class: "PM\\ChainCommandBundle\\Service\\ChainCollectionService"
+
+services:
+    pm.chaincommandbundle.chain.handler:
+        class: Monolog\Handler\StreamHandler
+        public: false
+        arguments:
+            - "%kernel.logs_dir%/%pm.chaincommandbundle.chain.log.file%"
+            - 200
+
+    pm.chaincommandbundle.chain.logger:
+        class: Symfony\Bridge\Monolog\Logger
+        public: false
+        arguments:
+            - "pm.chaincommandbundle.chain"
+        calls:
+            - ["pushHandler", ["@pm.chaincommandbundle.chain.handler"]]
+
+    pm.chaincommandbundle.chain.collection:
+        class: "%pm.chaincommandbundle.chain.collection.class%"
+        public: false
+
+    pm.chaincommandbundle.chain.manager:
+        class: "%pm.chaincommandbundle.chain.manager.class%"
+        arguments:
+            - '@pm.chaincommandbundle.chain.collection'
+            - '@event_dispatcher'

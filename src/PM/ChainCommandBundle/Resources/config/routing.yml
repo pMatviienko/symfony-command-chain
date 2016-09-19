@@ -1,0 +1,3 @@
+pm_chain_command_homepage:
+    path:     /
+    defaults: { _controller: PMChainCommandBundle:Default:index }
